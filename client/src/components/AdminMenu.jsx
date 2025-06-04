@@ -7,17 +7,17 @@ const AdminMenu = () => {
       <h2 className="text-lg font-bold text-cyan-400 mb-4">ADMIN PANEL</h2>
       <ul className="space-y-3">
         <li>
-          <Link to="/CreateCollection" className="text-gray-300 hover:text-white">
+          <Link to="/dashboard/admin/createcollection" className="text-gray-300 hover:text-white">
             Create Collection
           </Link>
         </li>
         <li>
-          <Link to="/CreateProduct" className="text-gray-300 hover:text-white">
+          <Link to="/dashboard/admin/createproduct" className="text-gray-300 hover:text-white">
             Create Product
           </Link>
         </li>
         <li>
-          <Link to="/ManageUsers" className="text-gray-300 hover:text-white">
+          <Link to="/dashboard/admin/manageusers" className="text-gray-300 hover:text-white">
             Manage Users
           </Link>
         </li>

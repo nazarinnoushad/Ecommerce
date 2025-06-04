@@ -1,7 +1,7 @@
 import slugify from "slugify";
 import Collection from "../models/collectionSchema.js";
 
-
+// create collection
 export const createCollection = async (req, res) => {
     try {
 // get info from the front-end
@@ -52,3 +52,26 @@ const collection = await Collection.create({name,slug:slugify(name)})
         });
     }
 };
+
+// get All Collection
+
+
+export const getAllCollection = async(req,res)=>{
+    try{
+       const collection = await Collection.find({})
+       res.status(200).json({
+       success:true,
+       message:"successfully fetched all collection",
+       collection
+})
+
+    }catch(error){
+        console.log(error);
+        res.status(500).json({
+            success:false,
+            message:`Error in fetching all collection ${error}`,
+            error
+        })
+        
+    }
+}
