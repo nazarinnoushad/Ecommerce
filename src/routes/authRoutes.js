@@ -14,13 +14,13 @@ router.post("/login",login)
 router.post("/logout",logout)
 
 router.get("/user-auth",isLoggedIn,(req,res)=>{
-    res.send(200).json({
+    res.status(200).json({
         ok : true
     })
 })
 
 router.get("/admin-auth",isLoggedIn,isAdmin,(req,res)=>{
-    res.send(200).json({
+    res.status(200).json({
         ok : true
     })
 })
