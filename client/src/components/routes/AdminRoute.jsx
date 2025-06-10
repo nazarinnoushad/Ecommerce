@@ -20,5 +20,5 @@ useEffect(()=>{
         }
         if(auth?.token) authCheck()
 },[auth?.token])
-return ok? <Loader/> :<Outlet path=""/>
+return ok? <Outlet/> : <Loader  path=""/>
 }

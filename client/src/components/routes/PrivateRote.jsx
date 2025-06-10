@@ -22,7 +22,7 @@ const PrivateRoute = () => {
         if(auth?.token) authCheck()
     },[auth?.token])
   return (
-    ok ? <Loader/> : <Outlet/>
+    ok ? <Outlet/> : <Loader/>
   )
 }
 

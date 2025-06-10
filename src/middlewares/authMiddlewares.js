@@ -8,7 +8,7 @@ import AuthRoles from "../utils/authRoles.js"
 export const isLoggedIn =(req,res,next) =>{
    try{
     const decode = JWT.verify(req.headers.authorization,config.JWT_SECRET) 
-    res.user = decode
+    req.user = decode
     next()
    }catch(error){
     console.log(error)
@@ -16,9 +16,10 @@ export const isLoggedIn =(req,res,next) =>{
 }
 
 //checking is admin
+
 export const isAdmin = async(req,res,next) =>{
    try{
-      const user = await User.findById(req.user._id)
+      const user = await User.findOne(req.user._id)
       if(user.role !== AuthRoles.ADMIN){
          return res.status(401).json({
             success : false ,

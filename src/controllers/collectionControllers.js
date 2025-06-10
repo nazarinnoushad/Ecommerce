@@ -1,5 +1,5 @@
 import slugify from "slugify";
-import Collection from "../models/collectionSchema.js";
+import Collection from "../models/collectionSchema.js"
 
 // create collection
 export const createCollection = async (req, res) => {
@@ -62,6 +62,7 @@ export const getAllCollection = async(req,res)=>{
        res.status(200).json({
        success:true,
        message:"successfully fetched all collection",
+       count:collection.length,
        collection
 })
 
@@ -73,5 +74,77 @@ export const getAllCollection = async(req,res)=>{
             error
         })
         
+    }
+}
+
+// update collection
+
+export const updateCollection = async(req,res)=>{
+    try{
+
+const {name} = req.body
+const {id} = req.params
+const collection = await Collection.findByIdAndUpdate(id,{name,slug:slugify(name)},{new:true})  
+res.status(200).json({
+    success:true,
+    message:"successfully update the collection",
+    collection
+})     
+
+    }catch(error){
+        console.log(error);
+        res.status(500).json({
+            success : false,
+            message :`Error in update collection ${error}`,
+            error
+        })
+    }
+}
+
+
+// Delete collection
+
+export const deleteCollection = async(req,res)=>{
+    try{
+const {id} = req.params
+const delCollection = await Collection.findByIdAndDelete(id)
+
+res.status(200).json({
+    success:true,
+    message:"successfully delete the collection",
+    delCollection
+})
+
+    }catch(error){
+        console.log(error);
+        res.status(500).json({
+            success:false,
+            message:`Error in delete collection ${error}`,
+            error
+        })
+        
+    }
+}
+
+// get single collection
+
+export const getSingleCollection = async(req,res)=>{
+    try{
+const collection = await Collection.findOne({
+    slug:req.params.slug
+})
+res.status(200).json({
+    success:true,
+    message:"successfully get single collection",
+    collection
+})
+
+    }catch(error){
+          console.log(error);
+          res.status(500).json({
+            success:false,
+            message:`Error in get single collection ${error}`,
+            error
+        })
     }
 }

@@ -21,7 +21,7 @@ const Navbar = () => {
         toast.success(data.message);
         setAuth({ user: null, token: "" });
         localStorage.removeItem("auth");
-        navigate("/login");
+        navigate("/");
       } else toast.error(data.message);
     } catch {
       toast.error("Logout failed. Please try again.");
