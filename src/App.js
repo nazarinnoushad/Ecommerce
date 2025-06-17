@@ -5,7 +5,7 @@ import morgan from 'morgan'
 import crypto from "crypto"
 import authRoutes from './routes/AuthRoutes.js'
 import collectionRoutes from './routes/collectionRoutes.js'
-
+import productRoutes from "./routes/productRoutes.js"
 const app = express()
 
 // middle wares
@@ -17,6 +17,7 @@ app.use(morgan("dev")) // logs request errors and more to the console
 //routes
 app.use("/api/v1/auth",authRoutes)
 app.use("/api/v1/collection",collectionRoutes)
+app.use("/api/v1/product",productRoutes)
 
 /*const key = crypto.randomBytes(64).toString('hex')
 console.log(key);*/
