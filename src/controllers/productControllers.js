@@ -145,3 +145,61 @@ export const deleteProduct = async(req,res)=>{
     
   }
 }
+
+// update product
+
+export const updateProduct = async(req,res)=>{
+  try{
+
+    // destructure
+    
+const {name,description,price,collection,quantity,shipping} = req.fields
+const {photo} = req.files
+
+
+// fields validation
+
+if(!name || !description || !price || !collection || !quantity || !shipping){
+  return res.status(400).json({
+    success:false,
+    message:"fill all the fields"
+  })
+}
+
+// photo validation
+
+if(!photo && photo.size>1000000){
+  res.status(400).json({
+    success:false,
+    message:"photo is required and should be less than 1MB"
+  })
+}
+
+// update
+
+const product = await Product.findByIdAndUpdate(
+  req.params.pid,
+  {...req.fields,slug:slugify(name)},
+  {new:true} 
+)
+if(photo) {
+  product.photo.data = fs.readFileSync(photo.path);
+  product.photo.contentType = photo.type;
+}
+await product.save();
+res.status(201).json({
+  success:true,
+  message:"product updated successfully",
+  product,
+})
+
+  }catch(error){
+    console.log(error);
+    res.status(500).json({
+      success:false,
+      message:`Error in update product: ${error}`,
+      error
+    })
+    
+  }
+}
