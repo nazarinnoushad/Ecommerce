@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { toast } from 'sonner';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-const Signup = () => {
+const Signup = () => { 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

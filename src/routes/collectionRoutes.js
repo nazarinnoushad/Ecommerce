@@ -6,7 +6,7 @@ const router = express.Router()
 
 // routes
 
-router.post("/create-collection",isLoggedIn,createCollection)
+router.post("/create-collection",isLoggedIn,isAdmin,createCollection)
 router.get("/get-allcollection",getAllCollection)
 router.put("/update-collection/:id",isLoggedIn,isAdmin,updateCollection)
 router.delete("/delete-collection/:id",isLoggedIn,isAdmin,deleteCollection)

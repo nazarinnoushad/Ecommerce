@@ -11,6 +11,7 @@ const Home = () => {
       >
         Get Started
       </Link>
+  
     </div>
   );
 };

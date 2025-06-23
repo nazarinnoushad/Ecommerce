@@ -31,7 +31,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="relative h-20 bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-300 shadow-md flex items-center justify-between px-4 md:px-10">
+    <nav className="relative h-20 bg-gradient-to-r from-blue-500 via-pink-400 to-blue-300 shadow-md flex items-center justify-between px-4 md:px-10">
       {/* Logo */}
       <Link
         to="/"
