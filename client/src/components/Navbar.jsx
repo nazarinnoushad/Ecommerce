@@ -38,7 +38,7 @@ const Navbar = () => {
         className="text-4xl font-black text-white tracking-widest font-serif hover:text-yellow-100"
         onClick={() => { setMobileMenuOpen(false); setDropdownOpen(false); }}
       >
-        Liza
+        ALiza
       </Link>
 
       {/* Mobile Toggle */}
@@ -91,7 +91,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="absolute top-20 left-0 w-full bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-300 text-white flex flex-col items-center space-y-4 py-4 z-50 md:hidden">
+        <div className="absolute top-20 left-0 w-full bg-gradient-to-r from-pink-500 via-blue-400 to-blue-300 text-white flex flex-col items-center space-y-4 py-4 z-50 md:hidden">
           <Link to="/" onClick={() => setMobileMenuOpen(false)} className="hover:text-yellow-100">Home</Link>
 
           {auth?.user ? (
