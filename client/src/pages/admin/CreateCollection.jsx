@@ -9,7 +9,7 @@ import { Modal } from 'antd';
 
 
 const CreateCollection = () => {
-const [collection,setcollection]= useState([])
+const [collection,setCollection]= useState([])
 const [name,setName] = useState("")
 const [isModalOpen, setIsModalOpen] = useState(false);
 const [selected,setSelected] = useState(null);
@@ -59,7 +59,7 @@ const getAllCollection = async()=>{
 try{
 const {data} = await axios.get("http://localhost:4000/api/v1/collection/get-allcollection")
 if(data.success){
-  setcollection(data.collection)
+  setCollection(data.collection)
   toast.success("Collections fetched successfully!")
 }
   }catch(error){
