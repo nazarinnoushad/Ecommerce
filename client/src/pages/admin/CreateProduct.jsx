@@ -7,19 +7,21 @@ import { Select } from 'antd';
 const { Option } = Select;
 
 const CreateProduct = () => {
-  const [collection, setCollection] = useState([]);
+  const [collection, setCollection] = useState("");
+  const [collections,setCollections] = useState([])
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [shipping, setSipping] = useState(false);
+  const [shipping, setShipping] = useState(false);
   const [photo,setPhoto] = useState("")
 
   const getAllCollection = async () => {
     try {
       const { data } = await axios.get("http://localhost:4000/api/v1/collection/get-allcollection");
-      if (data.success) {
-        setCollection(data.collection);
+      if (data && data.success) {
+        toast.success(data.message)
+        setCollections(data.collection);
         toast.success("Collections fetched successfully!");
       }
     } catch (error) {
@@ -31,6 +33,36 @@ const CreateProduct = () => {
   useEffect(() => {
     getAllCollection();
   }, []);
+
+
+  // handle create
+
+
+  const handleCreate = async(e)=>{
+       e.preventDefault()
+    try{
+ const productData = new FormData()    
+ productData.append("name",name) 
+ productData.append("collection",collection) 
+ productData.append("description",description) 
+ productData.append("price",price) 
+ productData.append("quantity",quantity) 
+ productData.append("shipping",shipping) 
+ productData.append("photo",photo) 
+
+ const {data} = await axios.post("http://localhost:4000/api/v1/product/create-product",productData)
+if (data.success) {
+  toast.success(data.message)
+  
+}else{
+ toast.error(data.message) 
+}
+    }catch(error){
+      console.log(error);
+      toast.error(`Something went wrong creating product ${error}`)
+      
+    }
+  }
 
   return (
      <div className="min-h-screen bg-black text-white flex flex-col md:flex-row">
@@ -51,7 +83,8 @@ const CreateProduct = () => {
             onChange={(value) => setCollection(value)}
             className="text-white"
           >
-            {collection.map((item) => (
+            {collections &&
+            collections.map((item) => (
               <Option key={item._id} value={item._id}>
                 {item.name}
               </Option>
@@ -72,12 +105,12 @@ const CreateProduct = () => {
             </label>
           </div>
 
-          {/* Image Preview */}
+          
           {photo && (
             <div>
               <img
                 src={URL.createObjectURL(photo)}
-                alt="product_preview"
+                alt="img_product"
                 className="mt-2 w-40 h-40 object-cover rounded border"
               />
             </div>
@@ -86,32 +119,46 @@ const CreateProduct = () => {
           {/* Product Inputs */}
           <input
             type="text"
+            value={name}
             placeholder="Enter name"
+            onChange={(e)=> setName(e.target.value)}
             className="p-2 rounded border text-white bg-transparent"
           />
 
           <textarea
+            cols={56}
+            rows={3}
+            type="text"
+            value={description}
             placeholder="Description"
+            onChange={(e)=>setDescription(e.target.value)}
             className="p-2 rounded border text-white bg-transparent"
           />
 
           <input
             type="number"
+            value={price}
             placeholder="Price"
+            onChange={(e)=>setPrice(e.target.value)}
             className="p-2 rounded border text-white bg-transparent"
           />
 
           <input
             type="number"
+            value={quantity}
             placeholder="Quantity"
+            onChange={(e)=>setQuantity(e.target.value)}
             className="p-2 rounded border text-white bg-transparent"
           />
 
           {/* Shipping Option */}
           <Select  
+          bordered
             placeholder="Select Shipping"
             className="text-white"
             size="large"
+            showSearch
+            onChange={(value)=>{setShipping(value)}}
           >
             <Option value="0">No</Option>
             <Option value="1">Yes</Option>
@@ -119,6 +166,7 @@ const CreateProduct = () => {
 
           <button
             type="submit"
+            onClick={handleCreate}
             className="bg-blue-800 text-white py-2 px-4 rounded w-fit"
           >
             Create Product
