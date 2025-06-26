@@ -42,6 +42,18 @@ const AdminMenu = () => {
             Manage Users
           </NavLink>
         </li>
+        <li>
+          <NavLink
+            to="/dashboard/admin/product"
+            className={({ isActive }) =>
+              `block px-2 py-1 rounded transition ${
+                isActive ? 'text-white bg-gray-800 font-medium' : 'text-gray-300 hover:text-white'
+              }`
+            }
+          >
+             Products
+          </NavLink>
+        </li>
       </ul>
     </div>
   );

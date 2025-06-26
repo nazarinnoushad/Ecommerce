@@ -15,6 +15,8 @@ import { Orders } from './pages/user/Orders';
 import CreateProduct from './pages/admin/CreateProduct';
 import ManageUsers from './pages/admin/ManageUsers';
 import CreateCollection from "./pages/admin/CreateCollection";
+import Product from "./pages/admin/Product";
+import UpdateProduct from "./pages/admin/UpdateProduct";
 
 function App() {
   return (
@@ -39,6 +41,8 @@ function App() {
           <Route path="admin/createcollection" element={<CreateCollection/>}/>
           <Route path="admin/createproduct" element={<CreateProduct/>}/>
           <Route path="admin/manageusers" element={<ManageUsers/>}/>
+          <Route path="admin/product" element={<Product/>}/>
+          <Route path="admin/update-product/:slug" element={<UpdateProduct />} />
         </Route>
 
       
