@@ -145,8 +145,10 @@ export const deleteProduct = async(req,res)=>{
     
   }
 }
+/*
 
 // update product
+
 
 export const updateProduct = async(req,res)=>{
   try{
@@ -203,3 +205,160 @@ res.status(201).json({
     
   }
 }
+  
+*/
+
+// Update Product
+
+
+export const updateProduct = async (req,res) =>{
+  try{
+const { name, description, price, collection, quantity, shipping } = req.fields;
+const { photo } = req.files;
+
+
+// Build list of missing fields
+
+const missingFields = [];
+if (!name) missingFields.push("name");
+if (!description) missingFields.push("description");
+if (!price) missingFields.push("price");
+if (!collection) missingFields.push("collection");
+if (!quantity) missingFields.push("quantity");
+if (!shipping) missingFields.push("shipping");
+
+
+if (missingFields.length) {
+  return res.status(400).json({
+    success: false,
+    message: `missing required fields: ${missingFields.join(", ")}`
+  });
+}
+
+if (photo && photo.size > 1_000_000) {
+  return res.status(400).json({
+    success: false,
+    message: "photo should be less than 1MB",
+  })
+}
+
+const product = await Product.findByIdAndUpdate(
+  req.params.pid,
+  {...req.fields, slug: slugify(name) },
+  { new: true}
+);
+
+if (photo) {
+  product.photo.data = fs.readFileSync(photo.path);
+  product.photo.contentType = photo.type;
+}
+
+await product.save();
+
+res.status(200).json({
+  success: true,
+  message: "Product updated successfully" ,
+  product,
+});
+
+
+  }catch(error){
+console.error("Error in Updating Product:",error);
+res.status(500).json({
+  success: false,
+  message: "Error in updating the product",
+  error: error.message,
+})
+  }
+}
+
+
+// Product Filter
+
+export const filterProduct  = async (req,res)=>{
+try{
+
+  const { checked,radio} = req.body;
+  let args = {}
+
+  // we will have collection in the args so fullfill its value with checked
+
+if (checked.length>0) args.collection = checked
+
+// user can select only one radio so we can directly check the value using mongoDB theory
+
+if (radio.length) args.price = {$gte : radio[0], $lte :radio[1]}
+
+const products = await Product.find(args)
+res.status(200).json({
+  success: true,
+  message:"successfully filtered products",
+  products
+})
+
+
+}catch(error){
+  console.log(error);
+  res.status(500).json({
+    success:false,
+    message:"Error while filtering products",
+    error
+  })
+  
+}
+
+}
+
+// Product Count
+
+// The .estimatedDocumentCount() is an in-built method of MongoDB to estimate the number of documents in a collection
+
+export const productCount = async (req, res) => {
+  try {
+    const totalProducts = await Product.find({}).estimatedDocumentCount();
+    res.status(200).json({
+      success: true,
+      totalProducts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Error in product count",
+      error,
+    });
+  }
+};
+
+
+
+// Product list based on page
+
+export const productList = async (req,res) => {
+  try{
+
+// set the number of products per page
+
+const perPage = 3;
+const page = req.params.page ?req.params.page : 1;
+const products = await Product.find({})
+.select("-photo")
+.skip((page -1) * perPage)    //.skip((page - 1) * perPage) in Mongoose is used for pagination — it tells MongoDB how many documents to skip before starting to return results.
+.limit(perPage)
+.sort({ createdAt: -1 })
+res.status(200).json({
+  success : true,
+  products,
+});
+  }catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success : false,
+      message : "error in per page ctrl",
+      error,
+    });
+  }
+};
+
+
+

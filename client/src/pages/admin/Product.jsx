@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import AdminMenu from '../../components/AdminMenu';
 import { toast } from 'sonner';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 const Product = () => {
   const [products, setProducts] = useState([]);
+
 
   const getAllProducts = async () => {
     try {
@@ -24,6 +25,20 @@ const Product = () => {
     getAllProducts();
   }, []);
 
+  const handleDelete = async (id) => {
+    try {
+      const confirm = window.confirm("Are you sure you want to delete this product?");
+      if (!confirm) return;
+
+      const { data } = await axios.delete(`http://localhost:4000/api/v1/product/delete-product/${id}`);
+      toast.success(data.message || "Product deleted successfully");
+      getAllProducts(); // Refresh product list
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      toast.error("Failed to delete product");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white flex flex-col md:flex-row">
       <aside className="w-full md:w-1/5 border-b md:border-b-0 md:border-r border-gray-800 p-4 md:p-6 bg-black">
@@ -41,7 +56,7 @@ const Product = () => {
             >
               <img
                 src={`http://localhost:4000/api/v1/product/product-photo/${item._id}`}
-                alt="product photo"
+                alt={item.name}
                 className="w-full h-48 object-cover rounded-md mb-4"
               />
               <h2 className="text-lg font-bold text-cyan-300">{item.name}</h2>
@@ -54,6 +69,12 @@ const Product = () => {
                   Update Product
                 </button>
               </Link>
+              <button
+                onClick={() => handleDelete(item._id)}
+                className="w-full mt-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium px-4 py-2 rounded"
+              >
+                Delete Product
+              </button>
             </div>
           ))}
         </div>
@@ -63,3 +84,4 @@ const Product = () => {
 };
 
 export default Product;
+

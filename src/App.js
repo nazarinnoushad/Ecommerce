@@ -3,7 +3,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import crypto from "crypto"
-import authRoutes from './routes/AuthRoutes.js'
+import authRoutes from './routes/authRoutes.js'
 import collectionRoutes from './routes/collectionRoutes.js'
 import productRoutes from "./routes/productRoutes.js"
 const app = express()
