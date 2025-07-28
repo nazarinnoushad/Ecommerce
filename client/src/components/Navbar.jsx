@@ -7,6 +7,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Dropdown from "./Dropdown";
+import Search from "./forms/Search";
+
 
 const Navbar = () => {
   const { auth, setAuth } = useContext(AuthContext);
@@ -31,8 +33,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="relative h-20 bg-gradient-to-r from-blue-500 via-pink-400 to-blue-300 shadow-md flex items-center justify-between px-4 md:px-10">
-      {/* Logo */}
+    <nav className="relative h-20 bg-gradient-to-r from-blue-500 via-pink-400 to-blue-300 shadow-md flex items-center justify-between px-4 md:px-10 ">
+
       <Link
         to="/"
         className="text-4xl font-black text-white tracking-widest font-serif hover:text-yellow-100"
@@ -41,7 +43,12 @@ const Navbar = () => {
         ALiza
       </Link>
 
-      {/* Mobile Toggle */}
+     
+      <div className="hidden md:block w-64 mx-4">
+        <Search />
+      </div>
+
+  
       <button
         onClick={() => {
           setMobileMenuOpen(!mobileMenuOpen);
@@ -77,7 +84,7 @@ const Navbar = () => {
         )}
       </ul>
 
-      {/* Desktop Auth Buttons */}
+      
       <div className="hidden md:flex items-center space-x-4">
         {!auth?.user ? (
           <>
@@ -92,6 +99,12 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="absolute top-20 left-0 w-full bg-gradient-to-r from-pink-500 via-blue-400 to-blue-300 text-white flex flex-col items-center space-y-4 py-4 z-50 md:hidden">
+          
+         
+          <div className="w-11/12">
+            <Search/>
+          </div>
+
           <Link to="/" onClick={() => setMobileMenuOpen(false)} className="hover:text-yellow-100">Home</Link>
 
           {auth?.user ? (
@@ -118,6 +131,7 @@ const Navbar = () => {
               <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className="hover:text-yellow-100">Sign Up</Link>
             </>
           )}
+
         </div>
       )}
     </nav>
@@ -125,5 +139,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
 
 

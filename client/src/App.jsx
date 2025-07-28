@@ -17,6 +17,8 @@ import ManageUsers from './pages/admin/ManageUsers';
 import CreateCollection from "./pages/admin/CreateCollection";
 import Product from "./pages/admin/Product";
 import UpdateProduct from "./pages/admin/UpdateProduct";
+import SearchItems from "./pages/SearchItem";
+
 
 function App() {
   return (
@@ -27,6 +29,7 @@ function App() {
         <Route path="collection" element={<Collection />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
+        <Route path="search-items" element={<SearchItems/>} />
 
       
         <Route path="dashboard" element={<PrivateRoute />}>
@@ -43,6 +46,7 @@ function App() {
           <Route path="admin/manageusers" element={<ManageUsers/>}/>
           <Route path="admin/product" element={<Product/>}/>
           <Route path="admin/update-product/:slug" element={<UpdateProduct />} />
+      
         </Route>
 
       

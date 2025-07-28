@@ -361,4 +361,38 @@ res.status(200).json({
 };
 
 
+// Search Product
+
+export const searchProduct = async (req,res) => {
+  try{
+
+// grab the keyword from the URL
+
+const { keyword } = req.params;
+
+// find the keyword from the name or description of the product.
+
+// if the keyword is present either in name or description we will display it.
+
+// the 'options' value "i" the case insensitive
+
+const results = await Product
+.find({
+  $or: [
+    { name: { $regex : keyword, $options: "i"} },
+    { description: { $regex : keyword, $options: "i"} },
+  ],
+})
+.select("-photo");
+res.json(results)
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: "Error In Search Product API",
+      error,
+    })
+    
+  }
+}
 
