@@ -1,51 +1,43 @@
-import { Helmet } from 'react-helmet';
+import React from "react";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const About = () => {
   return (
-    <div className="relative min-h-screen flex items-center justify-center px-4 bg-black overflow-hidden">
-      <Helmet>
-        <title>About</title>
-        <meta
-          name="description"
-          content="Learn about this full-stack authentication project using React, Node.js, Express, and MongoDB."
-        />
-      </Helmet>
-
-      <div
-        className="absolute inset-0 bg-cover bg-center opacity-60"
-        style={{
-          backgroundImage:
-            "url('https://plus.unsplash.com/premium_photo-1672883552028-569851f4e7d1?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
-        }}
-      />
-
-      <div className="relative z-10 max-w-3xl w-full p-8 text-white bg-black/10 backdrop-blur-md rounded-xl shadow-lg border border-white/20">
-        <h1 className="text-3xl sm:text-4xl text-pink-400 text-center font-extrabold mb-4 drop-shadow-lg">
-          About This Project
-        </h1>
-
-        <p className="text-lg leading-relaxed text-gray-200">
-          This is a full-stack authentication system built with{' '}
-          <span className="font-semibold">React</span>,{' '}
-          <span className="font-semibold">Node.js</span>,{' '}
-          <span className="font-semibold">Express</span>, and{' '}
-          <span className="font-semibold">MongoDB</span>.
+    <div className="min-h-screen bg-pink-100 text-gray-900 py-16 px-4">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-5xl font-extrabold text-center mb-4">About Aliza</h1>
+        <p className="text-lg text-center mb-10">
+          Aliza is a modern MERN stack e-commerce platform I built to deliver a smooth and intuitive online shopping experience. 
+          It integrates advanced features and a clean UI to demonstrate how a scalable e-commerce application is developed.
         </p>
 
-        <p className="text-gray-300 mb-4">
-          It provides core authentication features including:
-        </p>
+        <div className="bg-white p-6 rounded-xl shadow mb-10">
+          <h2 className="text-3xl font-bold mb-3">Why I Built Aliza</h2>
+          <p className="mb-4">
+            This project showcases my skills in building a real-world e-commerce solution. 
+            From product management to filtering and authentication, I focused on scalability and user experience.
+          </p>
+          <ul className="space-y-2">
+            {[
+              "Secure user authentication & authorization",
+              "Product and collection management",
+              "Advanced filters with dynamic search",
+              "Responsive UI with seamless navigation",
+            ].map((item, i) => (
+              <li key={i} className="flex items-center">
+                <CheckCircleIcon className="text-purple-600 mr-2" /> {item}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-        <ul className="list-disc list-inside text-gray-200 space-y-2 mb-6">
-          <li>User registration, login, and logout</li>
-          <li>JWT-based authentication and session handling</li>
-          <li>Secure API access with token verification</li>
-          <li>Role-based route protection for admin/user control</li>
-        </ul>
-
-        <p className="text-gray-300">
-          This project demonstrates how to implement secure, scalable authentication in modern web applications.
-        </p>
+        <div className="bg-white p-6 rounded-xl shadow text-center">
+          <h2 className="text-3xl font-bold mb-3">Project Goal</h2>
+          <p>
+            My goal with Aliza was to develop a complete e-commerce platform using the MERN stack, 
+            highlighting my expertise in full-stack web development.
+          </p>
+        </div>
       </div>
     </div>
   );

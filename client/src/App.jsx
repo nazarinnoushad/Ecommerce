@@ -18,6 +18,9 @@ import CreateCollection from "./pages/admin/CreateCollection";
 import Product from "./pages/admin/Product";
 import UpdateProduct from "./pages/admin/UpdateProduct";
 import SearchItems from "./pages/SearchItem";
+import CollectionProduct from "./pages/CollectionProduct";
+import Contact from "./pages/Contact";
+import Cart from "./pages/Cart";
 
 
 function App() {
@@ -26,11 +29,13 @@ function App() {
       <Route path="/" element={<Layout title={"Ecommerce"} />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact />} />
         <Route path="collection" element={<Collection />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="search-items" element={<SearchItems/>} />
-
+        <Route path="collection-product/:slug" element={<CollectionProduct/>} />
+        <Route path="cart" element={<Cart/>} />
       
         <Route path="dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<Dashboard />} />
