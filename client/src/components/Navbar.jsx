@@ -10,6 +10,8 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Dropdown from "./Dropdown";
 import Search from "./forms/Search";
 import useCollection from './../../../src/hooks/useCollection';
+import CartContext from "../context/CartContext";
+
 
 const Navbar = () => {
   const { auth, setAuth } = useContext(AuthContext);
@@ -18,6 +20,7 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [collectionDropdown, setCollectionDropdown] = useState(false);
   const collections = useCollection();
+  const [cart] = useContext(CartContext)
 
   const handleLogout = async () => {
     try {
@@ -142,6 +145,7 @@ const Navbar = () => {
      
         <Link to="/cart">
           <ShoppingCartIcon className="text-white cursor-pointer hover:text-yellow-100 " />
+          {cart?.length}
         </Link>
 
         {!auth?.user ? (

@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Banner from '../components/Banner';
 import axios from 'axios';
 import { toast } from 'sonner';
 import { Checkbox, Radio } from 'antd';
 import Prices from '../Data/data';
+import CartContext from '../context/CartContext';
 
 
 const Home = () => {
@@ -15,6 +16,7 @@ const [radio,setRadio] = useState([]);
 const [totalProducts,setTotalProducts] = useState(0);
 const [page,setPage] = useState(1);
 const [loading,setLoading] = useState(false)
+const [cart,setCart] = useContext(CartContext)
 
 
   // Get all collection
@@ -242,7 +244,7 @@ useEffect(() => {
                   >
                     More Details
                   </Link>
-                  <button className="flex-1 bg-pink-600 hover:bg-pink-700 text-white py-2 rounded-md text-sm">
+                  <button onClick={()=>{setCart([...cart,item])}} className="flex-1 bg-pink-600 hover:bg-pink-700 text-white py-2 rounded-md text-sm">
                     Add to Cart
                   </button>
                 </div>
