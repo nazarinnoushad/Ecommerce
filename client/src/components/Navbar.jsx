@@ -12,7 +12,6 @@ import Search from "./forms/Search";
 import useCollection from './../../../src/hooks/useCollection';
 import CartContext from "../context/CartContext";
 
-
 const Navbar = () => {
   const { auth, setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -20,7 +19,7 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [collectionDropdown, setCollectionDropdown] = useState(false);
   const collections = useCollection();
-  const [cart] = useContext(CartContext)
+  const [cart] = useContext(CartContext);
 
   const handleLogout = async () => {
     try {
@@ -75,7 +74,7 @@ const Navbar = () => {
 
   return (
     <nav className="w-full h-20 bg-gradient-to-r from-blue-500 via-pink-400 to-blue-300 shadow-md flex items-center justify-between px-4 md:px-10 z-50">
-      
+
       {/* Logo */}
       <Link
         to="/"
@@ -92,6 +91,19 @@ const Navbar = () => {
       <div className="hidden md:block w-64">
         <Search />
       </div>
+
+      {/* Mobile Cart Icon - Visible only on small screens */}
+      <Link
+        to="/cart"
+        className="md:hidden text-white flex items-center relative mr-3"
+      >
+        <ShoppingCartIcon fontSize="large" />
+        {cart?.length > 0 && (
+          <span className="absolute -top-1 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+            {cart.length}
+          </span>
+        )}
+      </Link>
 
       {/* Mobile Toggle */}
       <button
@@ -142,10 +154,13 @@ const Navbar = () => {
 
       {/* Right Side Buttons */}
       <div className="hidden md:flex items-center space-x-3">
-     
-        <Link to="/cart">
-          <ShoppingCartIcon className="text-white cursor-pointer hover:text-yellow-100 " />
-          {cart?.length}
+        <Link to="/cart" className="relative text-white cursor-pointer hover:text-yellow-100">
+          <ShoppingCartIcon fontSize="large" />
+          {cart?.length > 0 && (
+            <span className="absolute -top-1 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+              {cart.length}
+            </span>
+          )}
         </Link>
 
         {!auth?.user ? (
@@ -219,8 +234,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
 
 
 

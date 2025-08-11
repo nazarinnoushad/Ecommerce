@@ -8,19 +8,16 @@ const Profile = () => {
   const { auth, setAuth } = useContext(AuthContext);
 
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-
-
+  const [updated, setUpdated] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.put("http://localhost:4000/api/v1/auth/profile", {
         name,
-        email,
         password,
         phone,
         address,
@@ -28,13 +25,21 @@ const Profile = () => {
 
       if (data?.error) {
         toast.error(data?.error);
-        } else {
+      } else {
         setAuth({ ...auth, user: data?.updatedUser });
         let ls = localStorage.getItem("auth");
         ls = JSON.parse(ls);
         ls.user = data.updatedUser;
         localStorage.setItem("auth", JSON.stringify(ls));
-        toast.success("Profile updated successfully")
+
+        toast.success("Profile updated successfully");
+
+     
+        setName("");
+        setPassword("");
+        setPhone("");
+        setAddress("");
+        setUpdated(true);
       }
     } catch (error) {
       console.log(error);
@@ -42,14 +47,11 @@ const Profile = () => {
     }
   };
 
-
-    useEffect(() => {
-      const { name, email, phone, address } = auth.user;
-      setName(name);
-      setEmail(email);
-      setPhone(phone);
-      setAddress(address);
-  
+  useEffect(() => {
+    const { name, phone, address } = auth.user;
+    setName(name);
+    setPhone(phone);
+    setAddress(address);
   }, [auth?.user]);
 
   return (
@@ -61,59 +63,54 @@ const Profile = () => {
       <main className="w-full md:w-4/5 p-6 md:p-10">
         <h1 className="text-xl text-cyan-400 font-semibold mb-6">Update Profile</h1>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-lg">
-          <input
-            type="text"
-            name={name}
-            value={name}
-            placeholder="Enter Name"
-            onChange={(e) => setName(e.target.value)}
-            className="p-2 rounded border text-white bg-transparent"
-          />
+        {!updated ? (
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-lg">
+            <input
+              type="text"
+              name="name"
+              value={name}
+              placeholder="Enter Name"
+              onChange={(e) => setName(e.target.value)}
+              className="p-2 rounded border text-white bg-transparent"
+            />
 
-          <input
-            type="email"
-            name={email}
-            value={email}
-            placeholder="Enter Email"
-            onChange={(e) => setEmail(e.target.value)}
-            className="p-2 rounded border text-white bg-transparent"
-          />
+            <input
+              type="password"
+              name="password"
+              value={password}
+              placeholder="Enter New Password"
+              onChange={(e) => setPassword(e.target.value)}
+              className="p-2 rounded border text-white bg-transparent"
+            />
 
-          <input
-            type="password"
-            name={password}
-            value={password}
-            placeholder="Enter New Password"
-            onChange={(e) => setPassword(e.target.value)}
-            className="p-2 rounded border text-white bg-transparent"
-          />
+            <input
+              type="text"
+              name="phone"
+              value={phone}
+              placeholder="Phone"
+              onChange={(e) => setPhone(e.target.value)}
+              className="p-2 rounded border text-white bg-transparent"
+            />
 
-          <input
-            type="text"
-            name={phone}
-            value={phone}
-            placeholder="Phone"
-            onChange={(e) => setPhone(e.target.value)}
-            className="p-2 rounded border text-white bg-transparent"
-          />
+            <input
+              type="text"
+              name="address"
+              value={address}
+              placeholder="Address"
+              onChange={(e) => setAddress(e.target.value)}
+              className="p-2 rounded border text-white bg-transparent"
+            />
 
-          <input
-            type="text"
-            name={address}
-            value={address}
-            placeholder="Address"
-            onChange={(e) => setAddress(e.target.value)}
-            className="p-2 rounded border text-white bg-transparent"
-          />
-
-          <button
-            type="submit"
-            className="bg-blue-800 text-white py-2 px-4 rounded w-fit"
-          >
-            Update Profile
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="bg-blue-800 text-white py-2 px-4 rounded w-fit"
+            >
+              Update Profile
+            </button>
+          </form>
+        ) : (
+          <p className="text-green-400">Profile updated successfully.</p>
+        )}
       </main>
     </div>
   );

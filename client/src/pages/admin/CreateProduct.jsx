@@ -55,11 +55,11 @@ if (data.success) {
   toast.success(data.message)
   
       setName("");
-      setCollection(undefined);
+      setCollection("");
       setDescription("");
       setPrice("");
       setQuantity(""); 
-      setShipping(undefined);
+      setShipping(false);
       setPhoto("");
 
 }else{
@@ -86,7 +86,7 @@ if (data.success) {
           <Select
             bordered
             placeholder="Select a collection"
-            value={collection}
+           
             size="large"
             showSearch
             onChange={(value) => setCollection(value)}
@@ -164,7 +164,6 @@ if (data.success) {
           <Select  
           bordered
             placeholder="Select Shipping"
-            value={shipping}
             className="text-white"
             size="large"
             showSearch

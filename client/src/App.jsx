@@ -21,6 +21,7 @@ import SearchItems from "./pages/SearchItem";
 import CollectionProduct from "./pages/CollectionProduct";
 import Contact from "./pages/Contact";
 import Cart from "./pages/Cart";
+import ProductDetails from "./pages/ProductDetails";
 
 
 function App() {
@@ -31,11 +32,13 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
         <Route path="collection" element={<Collection />} />
+        <Route path="collection/:slug" element={<CollectionProduct />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="search-items" element={<SearchItems/>} />
         <Route path="collection-product/:slug" element={<CollectionProduct/>} />
         <Route path="cart" element={<Cart/>} />
+        <Route path="product/:slug" element={<ProductDetails />} />
       
         <Route path="dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<Dashboard />} />

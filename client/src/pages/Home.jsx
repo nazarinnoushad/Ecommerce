@@ -239,22 +239,38 @@ useEffect(() => {
                 <p className="text-md font-bold text-gray-800 mb-4">₹{item.price}</p>
                 <div className="flex gap-3">
                   <Link
-                    to={``}
+                    to={`/product/${item.slug}`}
                     className="flex-1 text-center bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-md text-sm"
                   >
                     More Details
                   </Link>
-                  <button onClick={() => {
-                    setCart([...cart, item]);
-                    localStorage.setItem(
-                      "cart",
-                      JSON.stringify([...cart, item])
-                    );
-                    toast.success("Item Added to cart");
-                    }}
-                     className="flex-1 bg-pink-600 hover:bg-pink-700 text-white py-2 rounded-md text-sm">
-                    Add to Cart
-                  </button>
+                   <button
+  onClick={() => {
+    // Check if product already in cart
+    const existingIndex = cart.findIndex((c) => c._id === item._id);
+
+    let updatedCart = [];
+
+    if (existingIndex !== -1) {
+      // product exists, increment quantityInCart
+      updatedCart = cart.map((c, i) =>
+        i === existingIndex
+          ? { ...c, quantityInCart: (c.quantityInCart || 1) + 1 }
+          : c
+      );
+    } else {
+      // new product, add with quantityInCart: 1
+      updatedCart = [...cart, { ...item, quantityInCart: 1 }];
+    }
+
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    toast.success("Item added to cart");
+  }}
+  className="flex-1 bg-pink-600 hover:bg-pink-700 text-white py-2 rounded-md text-sm"
+>
+  Add to Cart
+</button>
                 </div>
               </div>
             </div>
