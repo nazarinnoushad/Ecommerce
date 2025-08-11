@@ -244,7 +244,15 @@ useEffect(() => {
                   >
                     More Details
                   </Link>
-                  <button onClick={()=>{setCart([...cart,item])}} className="flex-1 bg-pink-600 hover:bg-pink-700 text-white py-2 rounded-md text-sm">
+                  <button onClick={() => {
+                    setCart([...cart, item]);
+                    localStorage.setItem(
+                      "cart",
+                      JSON.stringify([...cart, item])
+                    );
+                    toast.success("Item Added to cart");
+                    }}
+                     className="flex-1 bg-pink-600 hover:bg-pink-700 text-white py-2 rounded-md text-sm">
                     Add to Cart
                   </button>
                 </div>

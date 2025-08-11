@@ -1,5 +1,5 @@
 import express from 'express'
-import { login,logout,signUP,testController } from '../controllers/authControllers.js'
+import { login,logout,signUP,testController, updateProfile } from '../controllers/authControllers.js'
 import { isAdmin,isLoggedIn } from '../middlewares/authMiddlewares.js'
 const router = express.Router()
 //Routing
@@ -25,7 +25,12 @@ router.get("/admin-auth",isLoggedIn,isAdmin,(req,res)=>{
     })
 })
 
+// Update Profile
+
+router.put("/profile",isLoggedIn, updateProfile)
+
 
 //test controllers
 router.get("/test", isLoggedIn,isAdmin,testController)
 export default router;
+

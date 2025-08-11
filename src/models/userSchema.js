@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
         required:true,
     },
     address :{
-        type:String,
+        type:String,    /*multiple lines of address we need string changed to empty object {}*/
         required:[true,"address is required"],
         trim:true,
         maxlength:[120,"address should not exceed 120 chars"],

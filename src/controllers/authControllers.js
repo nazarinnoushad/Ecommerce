@@ -191,3 +191,27 @@ export const logout = async (req, res) => {
 export const testController = (req,res) =>{
     res.send("protect route")
 }
+
+// Update Profile
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { name, password, address, phone } = req.body;
+    const user = await User.findById(req.user?.id);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    if (name) user.name = name;
+    if (address) user.address = address;
+    if (phone) user.phone = phone;
+    if (password?.length >= 8) user.password = password;
+
+    const { password: _, ...updatedUser } = (await user.save()).toObject();
+
+    res.json({ success: true, message: "Profile updated", updatedUser });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Update failed", error: error.message });
+  }
+};
