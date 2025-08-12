@@ -2,6 +2,7 @@ import app from "./src/App.js";
 import mongoose from "mongoose";
 import colors from "colors"
 import config from "./src/config/config.js";
+import Razorpay from "razorpay";
 
 (async (req, res) => {
     try{
@@ -20,3 +21,9 @@ const PORT = config.PORT;
 app.listen(PORT, () => {
     console.log(`App is running at PORT : ${PORT} successfully`.rainbow);
 });
+
+
+export const instance = new Razorpay({
+    key_id:config.RAZORPAY_API_KEY,
+    key_secret:config.RAZORPAY_API_SECRET
+})

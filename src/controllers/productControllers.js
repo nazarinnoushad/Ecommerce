@@ -2,7 +2,7 @@ import fs from "fs"
 import slugify from "slugify";
 import Product from "../models/productSchema.js";
 import Collection from "../models/collectionSchema.js";
-
+import { instance } from "../../server.js";
 
 export const createProduct = async(req,res)=>{
     try{
@@ -424,4 +424,42 @@ res.status(200).json({
     })
     
   }
+}
+
+
+// Process Payment 
+
+export const processPayment = async(req,res)=>{
+  try{
+
+const options = {
+  /* amount : 1000,   // Razorpay Amount is in paise so 1000 means 10Rs (1000 = 10rs)
+
+  currency : "INR"*/
+
+ /*amount : Number(1000*100) */  // amount in rupees
+
+ amount : Number(req.body.amount*100) //taking the amount from the body
+
+}
+
+//  from the instance we are accessing the order and create options
+const order = await instance.orders.create(options)
+
+res.status(200).json({
+  success:true,
+  message:"Payment order created successfully",
+  order
+})
+
+  }catch(error){
+    console.log(error);
+    res.status(500).json({
+      success:false,
+      message:"Payment Processing Failed",
+      error
+    })
+    
+  }
+  
 }
